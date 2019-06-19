@@ -28,7 +28,8 @@ public class Runner {
 	}
 	
 	public void run(String[] args) {
-		Options options = createOptions();		
+		Options options = createOptions();	
+
 		
 		if (parseOptions(options, args)) {
 			
@@ -81,6 +82,7 @@ public class Runner {
 				{
 					System.out.println(fileName);
 				}
+				System.out.println("\nPrinted a file name per line");
 			}
 			
 			// print absolute path of the directory using .getCanonicalPath
@@ -111,12 +113,9 @@ public class Runner {
 					}
 				}
 				System.out.println("\nPrinted in order...");
-				if (reverseOrder)
-				{
-					System.out.println("Printed in reverse order...");
-				}
+
 			}
-			else {
+			else if(!one){
 				int count = 0;
 				System.out.println("File list:");
 				for (String fileName : files)
@@ -128,6 +127,10 @@ public class Runner {
 						System.out.println("");
 						count = 0;
 					}
+				}
+				if (reverseOrder)
+				{
+					System.out.println("\nPrinted in reverse order...");
 				}
 			}
 		}
@@ -144,7 +147,7 @@ public class Runner {
 			help = cmd.hasOption("h");
 			inputPath = cmd.getOptionValue("p");
 			absolutePath = cmd.hasOption("a");
-			inOrder = cmd.hasOption("l");
+			inOrder = cmd.hasOption("i");
 			reverseOrder = cmd.hasOption("r");
 			one = cmd.hasOption("o");
 			
@@ -178,8 +181,8 @@ public class Runner {
 				.desc("Print out absolute path of present directory")
 				.build());
 		
-		options.addOption(Option.builder("l")
-				.longOpt("line")
+		options.addOption(Option.builder("i")
+				.longOpt("inorder")
 				.desc("Print out files in present directory in order")
 				.build());
 
@@ -191,7 +194,6 @@ public class Runner {
 		options.addOption(Option.builder("o")
 				.longOpt("one")
 				.desc("print a file name per line")
-				.hasArg()
 				.build());
 		
 		return options;

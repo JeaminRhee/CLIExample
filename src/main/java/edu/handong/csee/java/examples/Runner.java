@@ -63,7 +63,7 @@ public class Runner {
 				System.out.println("Both commands cannot be executed at the same time(Confliction; In order and reverse order).");
 				System.exit(1);
 			}
-			
+			 
  
 			
 			// print files in the directory in reverse order.

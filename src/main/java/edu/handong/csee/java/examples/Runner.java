@@ -42,16 +42,16 @@ public class Runner {
 			// inputPath Option
 			if (inputPath == null)
 			{
-				System.out.println("You did not provide path as the value of the option p");
+				System.out.println("You did not type correct path as the value of the option p");
 				System.out.println("Run in project directory");
 				inputPath = System.getProperty("user.dir");
 			}
 			else
 			{
-				System.out.println("You provided \""+inputPath+"\"as the value of the option p");
+				System.out.println("You typed \""+inputPath+"\" as the value of the option p");
 				if (!new File(inputPath).isDirectory())
 				{
-					System.out.println("\nThis is not directory or wrong path. Enter 'p' option again.");
+					System.out.println("\nWrong path");
 				}
 			}
 			

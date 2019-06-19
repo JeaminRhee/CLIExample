@@ -18,9 +18,10 @@ public class Runner {
 	int five = 5;
 	String inputPath;
 	boolean help;
+	boolean absolutePath;
 	boolean inOrder;
 	boolean reverseOrder;
-	boolean absolutePath;
+
 	
 	public static void main(String[] args) {
 		Runner hi = new Runner();

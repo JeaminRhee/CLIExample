@@ -18,7 +18,7 @@ public class Runner {
 	String inputPath;
 	boolean help;
 	boolean absolutePath;
-	boolean inOrder; 
+	boolean inOrder;  
 	boolean reverseOrder;
 	boolean one;
 	

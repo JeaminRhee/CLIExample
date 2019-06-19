@@ -93,10 +93,10 @@ public class Runner {
 				{
 					System.out.println("\t" + fileName);
 				}
-				System.out.println("[You enter '-l'. So, Print out per line]");
+				System.out.println("Printed in order...");
 				if (reverseOrder)
 				{
-					System.out.println("[You enter '-r'. So, Print out reverse order]");
+					System.out.println("Printed in reverse order...");
 				}
 			}
 			else {
@@ -105,11 +105,11 @@ public class Runner {
 				System.out.println("File list:");
 				for (String fileName : files)
 				{
-					System.out.print("\t" + fileName + "\t");
+					System.out.print(fileName + "\t");
 					count++;
 					if (count == five)
 					{
-						System.out.printf("");
+						System.out.println("");
 						count = 0;
 						defaultPrint = true;
 					}

@@ -17,6 +17,7 @@ public class Runner {
 	int five = 5;
 	String inputPath;
 	boolean help; 
+	boolean d;
 	boolean absolutePath;
 	boolean inOrder;   
 	boolean reverseOrder; 
@@ -65,6 +66,13 @@ public class Runner {
 				System.exit(1);
 			}
 			 
+			if(d)
+			{
+				long fileSize = file.length();
+				String size = Long.toString(fileSize)+"bytes";
+				System.out.println(size);
+				System.out.printf("\n");
+			}
  
 			
 			// print files in the directory in reverse order.
@@ -150,6 +158,7 @@ public class Runner {
 			inOrder = cmd.hasOption("i");
 			reverseOrder = cmd.hasOption("r");
 			one = cmd.hasOption("o");
+			d = cmd.hasOption("d");
 			
 		} catch (Exception e) {
 			printHelp(options);
@@ -194,6 +203,12 @@ public class Runner {
 		options.addOption(Option.builder("o")
 				.longOpt("one")
 				.desc("print a file name per line")
+				.build());
+		
+		options.addOption(Option.builder("d")
+				.longOpt("size")
+				.desc("print size")
+				.argName("size")
 				.build());
 		
 		return options;

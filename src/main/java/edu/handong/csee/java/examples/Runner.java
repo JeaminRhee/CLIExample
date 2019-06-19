@@ -20,6 +20,7 @@ public class Runner {
 	boolean absolutePath;
 	boolean inOrder;
 	boolean reverseOrder;
+	boolean one;
 	
 	public static void main(String[] args) {
 		Runner hi = new Runner();
@@ -63,6 +64,7 @@ public class Runner {
 				System.exit(1);
 			}
 			
+
 			
 			// print files in the directory in reverse order.
 			if (reverseOrder)
@@ -70,6 +72,14 @@ public class Runner {
 				List<String> list = Arrays.asList(files);
 				Collections.reverse(list);
 				files = list.toArray(new String[list.size()]);
+			}
+			
+			if(one)
+			{
+				for(String fileName: files)
+				{
+					System.out.println(fileName);
+				}
 			}
 			
 			// print absolute path of the directory using .getCanonicalPath
@@ -135,6 +145,7 @@ public class Runner {
 			absolutePath = cmd.hasOption("a");
 			inOrder = cmd.hasOption("l");
 			reverseOrder = cmd.hasOption("r");
+			one = cmd.hasOption("o");
 			
 		} catch (Exception e) {
 			printHelp(options);
@@ -159,7 +170,6 @@ public class Runner {
 				.desc("Set a path of a directory to display [Only directory]")
 				.hasArg()
 				.argName("Path name to display")
-				.required()
 				.build());
 		
 		options.addOption(Option.builder("a")
@@ -176,7 +186,14 @@ public class Runner {
 				.longOpt("reverseOrder")
 				.desc("Print out files in present directory in reverse order")
 				.build());
-
+		
+		options.addOption(Option.builder("o")
+				.longOpt("one")
+				.desc("print a file name per line")
+				.hasArg()
+				.argName("directory name")
+				.build());
+		
 		return options;
 	}
 	

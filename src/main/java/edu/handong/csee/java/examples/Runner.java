@@ -88,12 +88,21 @@ public class Runner {
 			// print files in the directory in descending order.
 			if (inOrder)
 			{
+				int count = 0;
+				boolean defaultPrint = false;
 				System.out.println("File list:");
 				for (String fileName : files)
 				{
-					System.out.println("\t" + fileName);
+					System.out.print(fileName + "\t");
+					count++;
+					if (count == five)
+					{
+						System.out.println("");
+						count = 0;
+						defaultPrint = true;
+					}
 				}
-				System.out.println("Printed in order...");
+				System.out.println("\nPrinted in order...");
 				if (reverseOrder)
 				{
 					System.out.println("Printed in reverse order...");

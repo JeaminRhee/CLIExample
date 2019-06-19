@@ -1,5 +1,11 @@
 package edu.handong.csee.java.examples;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -8,94 +14,175 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 public class Runner {
-	
-	String path;
-	boolean verbose;
+
+	int five = 5;
+	String inputPath;
 	boolean help;
-
+	boolean inOrder;
+	boolean reverseOrder;
+	boolean absolutePath;
+	
 	public static void main(String[] args) {
-
-		Runner myRunner = new Runner();
-		myRunner.run(args);
-
+		Runner hi = new Runner();
+		hi.run(args);
 	}
-
-	private void run(String[] args) {
-		Options options = createOptions();
+	
+	public void run(String[] args) {
+		Options options = createOptions();		
 		
-		if(parseOptions(options, args)){
-			if (help){
+		if (parseOptions(options, args)) {
+			
+			//print help; like usage.
+			if (help)
+			{
 				printHelp(options);
 				return;
 			}
 			
-			// path is required (necessary) data so no need to have a branch.
-			System.out.println("You provided \"" + path + "\" as the value of the option p");
+			// inputPath Option
+			if (inputPath == null)
+			{
+				System.out.println("You did not provide path as the value of the option p");
+				System.out.println("Run in project directory");
+				inputPath = System.getProperty("user.dir");
+			}
+			else
+			{
+				System.out.println("You provided \""+inputPath+"\"as the value of the option p");
+				if (!new File(inputPath).isDirectory())
+				{
+					System.out.println("\nThis is not directory or wrong path. Enter 'p' option again.");
+				}
+			}
 			
-			// TODO show the number of files in the path
+			File file = new File(inputPath);
+			String[] files = file.list();
 			
-			if(verbose) {
-				
-				// TODO list all files in the path
-				
-				System.out.println("Your program is terminated. (This message is shown because you turned on -v option!");
+			if( (reverseOrder==true) && (inOrder==true) )
+			{
+				System.out.println("Both commands cannot be executed at the same time(Confliction; In order and reverse order).");
+				System.exit(1);
+			}
+			
+			
+			// print files in the directory in reverse order.
+			if (reverseOrder)
+			{
+				List<String> list = Arrays.asList(files);
+				Collections.reverse(list);
+				files = list.toArray(new String[list.size()]);
+			}
+			
+			// print absolute path of the directory using .getCanonicalPath
+			if (absolutePath)
+			{
+				System.out.printf("\nAbsolute path of the directory is: ");
+				try {
+					System.out.printf(file.getCanonicalPath() + "\n");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			// print files in the directory in descending order.
+			if (inOrder)
+			{
+				System.out.println("File list:");
+				for (String fileName : files)
+				{
+					System.out.println("\t" + fileName);
+				}
+				System.out.println("[You enter '-l'. So, Print out per line]");
+				if (reverseOrder)
+				{
+					System.out.println("[You enter '-r'. So, Print out reverse order]");
+				}
+			}
+			else {
+				int count = 0;
+				boolean defaultPrint = false;
+				System.out.println("File list:");
+				for (String fileName : files)
+				{
+					System.out.print("\t" + fileName + "\t");
+					count++;
+					if (count == five)
+					{
+						System.out.printf("");
+						count = 0;
+						defaultPrint = true;
+					}
+				}
+				if (defaultPrint)
+				{
+					System.out.println();
+				}
 			}
 		}
 	}
-
+	
 	private boolean parseOptions(Options options, String[] args) {
 		CommandLineParser parser = new DefaultParser();
-
+		
 		try {
+			
+			CommandLine cmd = parser.parse(options,  args);
 
-			CommandLine cmd = parser.parse(options, args);
-
-			path = cmd.getOptionValue("p");
-			verbose = cmd.hasOption("v");
 			help = cmd.hasOption("h");
-
+			inputPath = cmd.getOptionValue("p");
+			absolutePath = cmd.hasOption("a");
+			inOrder = cmd.hasOption("l");
+			reverseOrder = cmd.hasOption("r");
+			
 		} catch (Exception e) {
 			printHelp(options);
+			
 			return false;
 		}
-
+		
 		return true;
 	}
-
-	// Definition Stage
+	
 	private Options createOptions() {
 		Options options = new Options();
-
-		// add options by using OptionBuilder
-		options.addOption(Option.builder("p").longOpt("path")
-				.desc("Set a path of a directory or a file to display")
+		
+		options.addOption(Option.builder("h")
+				.longOpt("help")
+				.desc("Help")
+				.build());
+		
+		options.addOption(Option.builder("p")
+				.longOpt("path")
+				.desc("Set a path of a directory to display [Only directory]")
 				.hasArg()
 				.argName("Path name to display")
 				.required()
 				.build());
-
-		// add options by using OptionBuilder
-		options.addOption(Option.builder("v").longOpt("verbose")
-				.desc("Display detailed messages!")
-				//.hasArg()     // this option is intended not to have an option value but just an option
-				.argName("verbose option")
-				//.required() // this is an optional option. So disabled required().
+		
+		options.addOption(Option.builder("a")
+				.longOpt("absolutePath")
+				.desc("Print out absolute path of present directory")
 				.build());
 		
-		// add options by using OptionBuilder
-		options.addOption(Option.builder("h").longOpt("help")
-		        .desc("Help")
-		        .build());
+		options.addOption(Option.builder("l")
+				.longOpt("line")
+				.desc("Print out list per line")
+				.build());
+
+		options.addOption(Option.builder("r")
+				.longOpt("reverseOrder")
+				.desc("Display list reverse order")
+				.build());
 
 		return options;
 	}
 	
+	
 	private void printHelp(Options options) {
-		// automatically generate the help statement
 		HelpFormatter formatter = new HelpFormatter();
-		String header = "CLI test program";
-		String footer ="\nPlease report issues at https://github.com/lifove/CLIExample/issues";
-		formatter.printHelp("CLIExample", header, options, footer, true);
+		String header = "Java List Directory Command using Common CLI; CLIExample";
+		String footer = "";
+		formatter.printHelp("Bonus Homework", header, options, footer, true);
 	}
-
 }

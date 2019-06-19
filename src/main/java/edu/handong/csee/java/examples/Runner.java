@@ -177,12 +177,12 @@ public class Runner {
 		
 		options.addOption(Option.builder("l")
 				.longOpt("line")
-				.desc("Print out list per line")
+				.desc("Print out files in present directory in order")
 				.build());
 
 		options.addOption(Option.builder("r")
 				.longOpt("reverseOrder")
-				.desc("Display list reverse order")
+				.desc("Print out files in present directory in reverse order")
 				.build());
 
 		return options;

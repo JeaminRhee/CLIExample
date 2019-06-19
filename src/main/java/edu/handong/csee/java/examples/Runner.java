@@ -14,14 +14,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 public class Runner {
-
 	int five = 5;
 	String inputPath;
 	boolean help;
 	boolean absolutePath;
 	boolean inOrder;
 	boolean reverseOrder;
-
 	
 	public static void main(String[] args) {
 		Runner hi = new Runner();
@@ -90,7 +88,6 @@ public class Runner {
 			if (inOrder)
 			{
 				int count = 0;
-				boolean defaultPrint = false;
 				System.out.println("File list:");
 				for (String fileName : files)
 				{
@@ -100,7 +97,6 @@ public class Runner {
 					{
 						System.out.println("");
 						count = 0;
-						defaultPrint = true;
 					}
 				}
 				System.out.println("\nPrinted in order...");
@@ -111,7 +107,6 @@ public class Runner {
 			}
 			else {
 				int count = 0;
-				boolean defaultPrint = false;
 				System.out.println("File list:");
 				for (String fileName : files)
 				{
@@ -121,17 +116,13 @@ public class Runner {
 					{
 						System.out.println("");
 						count = 0;
-						defaultPrint = true;
 					}
-				}
-				if (defaultPrint)
-				{
-					System.out.println();
 				}
 			}
 		}
 	}
 	
+	//Assigning boolean values of command
 	private boolean parseOptions(Options options, String[] args) {
 		CommandLineParser parser = new DefaultParser();
 		
@@ -154,6 +145,7 @@ public class Runner {
 		return true;
 	}
 	
+	// Definition Stage
 	private Options createOptions() {
 		Options options = new Options();
 		
@@ -188,7 +180,7 @@ public class Runner {
 		return options;
 	}
 	
-	
+	//Setting Help Stage
 	private void printHelp(Options options) {
 		HelpFormatter formatter = new HelpFormatter();
 		String header = "Java List Directory Command using Common CLI; CLIExample";

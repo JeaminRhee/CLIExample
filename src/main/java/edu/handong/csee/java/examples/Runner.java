@@ -16,10 +16,10 @@ import org.apache.commons.cli.Options;
 public class Runner {
 	int five = 5;
 	String inputPath;
-	boolean help;
+	boolean help; 
 	boolean absolutePath;
 	boolean inOrder;  
-	boolean reverseOrder;
+	boolean reverseOrder; 
 	boolean one;
 	
 	public static void main(String[] args) {

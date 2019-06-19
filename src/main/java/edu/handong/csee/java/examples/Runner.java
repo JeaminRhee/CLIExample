@@ -51,7 +51,7 @@ public class Runner {
 				System.out.println("You typed \""+inputPath+"\" as the value of the option p");
 				if (!new File(inputPath).isDirectory())
 				{
-					System.out.println("\nWrong path");
+					System.out.println("\nWrong path or Directory.");
 				}
 			}
 			

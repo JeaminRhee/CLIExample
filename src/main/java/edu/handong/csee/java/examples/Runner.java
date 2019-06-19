@@ -74,7 +74,8 @@ public class Runner {
 				files = list.toArray(new String[list.size()]);
 			}
 			
-			if(one)
+			// print a file name per line
+			if (one)
 			{
 				for(String fileName: files)
 				{
@@ -191,7 +192,6 @@ public class Runner {
 				.longOpt("one")
 				.desc("print a file name per line")
 				.hasArg()
-				.argName("directory name")
 				.build());
 		
 		return options;
